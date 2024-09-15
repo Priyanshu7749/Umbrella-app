@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Umbrella Customizer</title>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .relative {
+            position: relative;
+            width: 50%;
+        }
+
+        #umbrella {
+            width: 100%;
+        }
+
+        #logo-preview {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 120px;
+        }
+
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        #pink-btn {
+            background-color: #ec4899;
+        }
+
+        #blue-btn {
+            background-color: #3b82f6; 
+        }
+
+        #yellow-btn {
+            background-color: #fbbf24;
+        }
+
+        .upload-container {
+            text-align: center;
+            margin-right: 100px;
+        }
+
+        #custom-upload-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            margin-top: 27px;
+            margin-right: 114px;
+        }
+
+        #share-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flex">
+            <div class="relative">
+                <img id="umbrella" src="Blue umbrella.png" alt="Umbrella" />
+                <img id="logo-preview" src="" alt="Brand Logo" class="hidden" />
+            </div>
+            <div class="upload-container">
+                <h1>Customize Your Umbrella</h1>
+                <div class="button-container">
+                    <button id="pink-btn" class="color-btn"></button>
+                    <button id="blue-btn" class="color-btn"></button>
+                    <button id="yellow-btn" class="color-btn"></button>
+                </div>
+                <div>
+                    <label id="custom-upload-btn">
+                        <img id="share-icon" src="upload_icon.svg" alt="Share Icon" />
+                        Upload Logo
+                        <input type="file" id="logo-upload" accept="image/*" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const umbrella = document.getElementById('umbrella');
+        const logoPreview = document.getElementById('logo-preview');
+        const logoUpload = document.getElementById('logo-upload');
+        const pinkBtn = document.getElementById('pink-btn');
+        const blueBtn = document.getElementById('blue-btn');
+        const yellowBtn = document.getElementById('yellow-btn');
+        const customUploadBtn = document.getElementById('custom-upload-btn');
+
+        pinkBtn.addEventListener('click', () => changeUmbrellaColor('pink'));
+        blueBtn.addEventListener('click', () => changeUmbrellaColor('blue'));
+        yellowBtn.addEventListener('click', () => changeUmbrellaColor('yellow'));
+
+        function changeUmbrellaColor(color) {
+            umbrella.src = `${color} umbrella.png`;
+
+            // Change background and button color
+            if (color === 'pink') {
+                document.body.style.backgroundColor = '#fce7f3';
+                customUploadBtn.style.backgroundColor = '#ec4899';
+                customUploadBtn.style.color = 'white';
+            } else if (color === 'blue') {
+                document.body.style.backgroundColor = '#dbeafe';
+                customUploadBtn.style.backgroundColor = '#3b82f6';
+                customUploadBtn.style.color = 'white';
+            } else if (color === 'yellow') {
+                document.body.style.backgroundColor = '#fef3c7';
+                customUploadBtn.style.backgroundColor = '#fbbf24';
+                customUploadBtn.style.color = 'black';
+            }
+        }
+
+        logoUpload.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    logoPreview.src = event.target.result;
+                    logoPreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
